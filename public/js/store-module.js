@@ -7,7 +7,7 @@ const store = reactive({
     appState: {...initialState},
     setState(val) {
         console.log('setState...')
-        this.appState = {...this.appStore, ...val};
+        this.appState = {...this.appState, ...val};
         localStorage.setItem("appstate", JSON.stringify(this.appState));
     },
     getState() {

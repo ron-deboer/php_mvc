@@ -23,13 +23,13 @@
                     alert("Please enter Username and Password");
                     return;
                 }
-                store.setState({ isLoggedIn: true });
-                eventBus.emit('appstate', { isLoggedIn: true });
                 // const result = userservice.userLogin(this.user);
                 // if (result.status !== 'ok') {
                 //     notyf.error("Login Failed");
                 //     return;
                 // }
+                store.setState({ username: this.user.username, isLoggedIn: true });
+                eventBus.emit('appstate', {});
                 notyf.success("Login Success");
             },
             mounted() {
