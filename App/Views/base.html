@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="data:,">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" type="text/css" href="./css/spectre.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/notyf.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <script src="./js/notyf.min.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script type="module">
+        import { createApp } from "./js/petite-vue-module.js";
+        import store from "./js/store-module.js";
+        import eventBus from "./js/mediator-module.js";
+
+        function NavBar() {
+            return {
+                logOut() {
+                    store.setState({ isLoggedIn: false });
+                    document.location.href = '/';
+                },
+                logIn() {
+                    store.setState({ isLoggedIn: true });
+                },
+                mounted() {
+                    console.log('222:mounted...');
+                    store.getState();
+                    console.log(store.appState);
+                }
+            };
+        }
+        createApp({
+            store,
+            NavBar,
+        }).mount('#navbar');           
+    </script>
+
+    {% block script %}
+    {% endblock %}
+
+</head>
+
+<body>
+    <div class="container">
+        <header id="navbar" v-scope="NavBar()" @vue:mounted="mounted" class="navbar bg-primary">
+            <section class="navbar-section">
+                <span v-show="store.appState.isLoggedIn" v-cloak style="font-size:22px;cursor:pointer" @click="openNav()">&#9776;</span>
+            </section>
+            <section class="navbar-center">
+                <a href="/" class="btn btn-link text-light">MyBooks Lite</a>
+            </section>
+            <section class="navbar-section">
+                <a v-show="store.appState.isLoggedIn" v-cloak @click="logOut" href="#" class="btn btn-link text-light">logout</a>
+            </section>
+        </header>
+        <div id="appSidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+            <nav>
+                <a href="#" class="level1" onclick="openSubMenu(event)">Config &#9207;</a>
+                <ul class="level2">
+                    <li class="list-item"><a href="/userlist">Users</a></li>
+                    <li class="list-item"><a href="/catlist">Categories</a></li>
+                </ul>
+                <a href="/userlist">Data Entry</a>
+                <a href="/register">Reports</a>
+            </nav>
+        </div>
+        {% block body %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

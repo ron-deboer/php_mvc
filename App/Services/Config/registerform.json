@@ -1,0 +1,38 @@
+{
+    'formname': 'Register',
+    'fields': [
+        {
+            'name': 'username',
+            'type': 'text',
+            'label': 'User Name',
+            'placeholder': 'user name',
+            'vmodel': 'user.name',
+            'extra': 'required'
+        },
+        {
+            'name': 'email',
+            'type': 'email',
+            'label': 'Email',
+            'placeholder': 'email',
+            'vmodel': 'user.email',
+            'extra': 'required'
+        },
+        {
+            'name': 'phone',
+            'type': 'text',
+            'label': 'Phone',
+            'placeholder': 'phone',
+            'vmodel': 'user.phone',
+            'extra': 'required'
+        },
+        {
+            'name': 'surname',
+            'type': 'text',
+            'label': 'Surname',
+            'placeholder': 'surname',
+            'vmodel': 'user.surname',
+            'extra': 'required'
+        }
+
+    ]
+}

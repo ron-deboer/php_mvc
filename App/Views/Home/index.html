@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block script %}
+
+<script src="js/userservice.js"></script>
+<script type="module">
+    const notyf = new Notyf();
+    const userservice = new UserService();
+    import { createApp } from "./js/petite-vue-module.js";
+    import store from "./js/store-module.js";
+    import eventBus from "./js/mediator-module.js";
+
+    function LoginForm() {
+        return {
+            user: {
+                username: "admin",
+                password: "nimda",
+            },
+            login() {
+                if (this.user.username.trim().length == 0 || this.user.password.trim().length == 0) {
+                    alert("Please enter Username and Password");
+                    return;
+                }
+                store.setState({ isLoggedIn: true });
+                eventBus.emit('appstate', { isLoggedIn: true });
+                // const result = userservice.userLogin(this.user);
+                // if (result.status !== 'ok') {
+                //     notyf.error("Login Failed");
+                //     return;
+                // }
+                notyf.success("Login Success");
+            },
+            mounted() {
+                console.log('111:mounted...');
+                store.getState();
+            }
+        }
+    }
+    createApp({
+        store,
+        LoginForm,
+    }).mount('#loginform');
+</script>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div id="loginform" v-scope="LoginForm()" @vue:mounted="mounted">
+
+    <div v-show="store.appState.isLoggedIn" v-cloak class="hero bg-dodgerblue">
+        <div class="hero-body">
+            <h1>PHP + VUEJS + SERVER EVENTS</h1>
+            <p>This is an example of an alternative to nextjs</p>
+            <p>Server side rendering + server events push triggers from the server</p>
+        </div>
+    </div>
+
+    <div v-show="!store.appState.isLoggedIn" v-cloak class="data-card">
+        <div>
+            <h3 class="pt-1">User Login</h3>
+        </div>
+        <form autocomplete="off" onsubmit="javascript:return false;">
+            <label>User Name</label>
+            <input is="my-input" class="form-input" type="text" name="field1" placeholder="user name" v-model="user.username" required />
+            <label>Password</label>
+            <input is="my-input" class="form-input" type="password" name="field2" placeholder="password" v-model="user.pasword" required />
+
+            <button class="btn btn-primary mtop-2" @click="login">Login</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

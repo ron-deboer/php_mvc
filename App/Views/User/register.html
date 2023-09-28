@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block body %}
+
+<div class="data-card">
+    <div>
+        <h3 class="pt-1">Register</h3>
+    </div>
+    <form v-scope="RegisterForm()" autocomplete="off" onsubmit="javascript:return false;">
+        <label>User Name</label>
+        <input is="my-input" class="form-input" type="text" name="field1" placeholder="user name" v-model="user.username" required />
+        <label>First Name</label>
+        <input is="my-input" class="form-input" type="text" name="field2" placeholder="first name" v-model="user.firstname" required />
+        <label>Last Name</label>
+        <input is="my-input" class="form-input" type="text" name="field3" placeholder="last name" v-model="user.lastname" required />
+        <label>Email</label>
+        <input is="my-input" class="form-input" type="email" name="field4" placeholder="email" v-model="user.email" required />
+        <label>Phone</label>
+        <input is="my-input" class="form-input" type="text" name="field6" placeholder="phone" v-model="user.phone" required />
+        <label>User Type</label>
+        <select class="form-select" name="field7" v-model="user.type">
+            <option value="ADMIN">admin</option>
+            <option value="USER">user</option>
+            <option value="CUSTOMER">customer</option>
+        </select>
+
+        <button class="btn btn-primary my-2" @click="save">Save</button>
+    </form>
+</div>
+
+{% endblock %}
+{% block script %}
+
+<script src="js/userservice.js"></script>
+<script type="module">
+    import { createApp, reactive } from "./js/petite-vue-module.js";
+    const userservice = new UserService();
+    const notyf = new Notyf();
+
+    function RegisterForm() {
+        return {
+            user: {
+                username: "",
+                firstname: "",
+                lastname: "",
+                email: "",
+                password: "",
+                phone: "",
+                type: "CUSTOMER",
+            },
+            save() {
+                if (this.user.username.trim().length == 0 || this.user.email.trim().length == 0) {
+                    alert("Please enter Username and Email");
+                    return;
+                }
+                // console.log(this.user);
+                userservice.registerUser(this.user);
+
+                notyf.success("Register Success");
+                setTimeout(() => {
+                    window.location.href = "/userlist";
+                }, 2000);
+            },
+        };
+    }
+
+    createApp({
+        RegisterForm,
+        $delimiters: ["${", "}"],
+    }).mount();
+</script>
+
+{% endblock %}

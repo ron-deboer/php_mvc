@@ -1,0 +1,111 @@
+body {
+    background: #eee;
+}
+header.navbar {
+    padding: 0.5rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+label {
+    margin-top: 0.2rem;
+}
+td {
+    overflow: hidden;
+    white-space: nowrap;
+}
+.container {
+    width: 75%;
+    margin: 0 auto;
+}
+.data-card {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 2rem 4rem;
+    margin-top: 2rem;
+}
+.btn {
+    margin: 0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.2rem;
+}
+.text-white {
+    color: #fff;
+}
+.bg-teal {
+    background-color: teal;
+    color: white;
+}
+.bg-dodgerblue {
+    background-color: dodgerblue;
+    color: white;
+}
+.hero {
+    margin-top: 1rem;
+    padding: 2rem;    
+}
+.mtop-2 {
+  margin-top: 2rem;
+}
+.hidden, [v-cloak] {
+  display:  none !important;
+}
+/**
+ *
+ */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: navy;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+nav > .level2 {
+  list-style: none;
+  display: none;
+}
+
+nav > .level2 > .list-item {
+  color: white;
+  position: relative;
+}
+/**
+ *
+ */
