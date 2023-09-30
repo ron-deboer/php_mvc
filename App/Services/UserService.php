@@ -9,6 +9,12 @@ define('USER_API_BASE', "http://localhost:3000/api/users");
 
 class UserService extends \Core\Service {
 
+    public static function loginUser($data) {
+        $url = USER_API_BASE;
+        $resp = HttpService::httpPost($url, $data);
+        return $resp;
+    }
+
     public static function buildRegisterForm() {
         $json = file_get_contents(__DIR__ . '/Config/registerform.json');
         $json = str_replace("'", '"', $json);
@@ -24,8 +30,8 @@ class UserService extends \Core\Service {
     }
 
     public static function fetchUserById($id) {
-        $url = USER_API_BASE;
-        $resp = HttpService::httpGet($url . "/$id");
+        $url = USER_API_BASE . "/$id";
+        $resp = HttpService::httpGet($url);
         return $resp;
     }
 

@@ -3,26 +3,43 @@
 {% block title %}Userlist{% endblock %}
 
 {% block body %}
-
+<style>
+    @media screen and (max-width: 600px) {
+      table thead {
+        display: none;
+      }
+      table td {
+        display: flex;
+      }
+      table td::before {
+        content: attr(label);
+        font-weight: bold;
+        width: 120px;
+        min-width: 120px;
+      }
+      table td:has(> a.btn) {
+          display: none;
+      }
+      td[label="Phone"] {
+        border-bottom: 2px solid #bbb;
+      }
+    }
+</style>
 <table v-scope class="table">
     <thead>
         <tr>
-        <th>User Name</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Edit</th>
-        <th>Delete</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         <tr v-for="user in store.users" :key="user.id">
-            <td>${user.username}</td>
-            <td>${user.firstname}</td>
-            <td>${user.lastname}</td>
-            <td>${user.email}</td>
-            <td>${user.phone}</td>
+            <td label="User Name">${user.username}</td>
+            <td label="Email">${user.email}</td>
+            <td label="Phone">${user.phone}</td>
             <td><a class="btn btn-success" @click="store.edit(user.id)">Edit</a></td>
             <td><a class="btn btn-primary" @click="store.delete(user.id)">Delete</a></td>
         </tr>
@@ -33,18 +50,17 @@
 
 {% block script %}
 
-<script src="js/userservice.js"></script>
 <script type="module">
     import { createApp, reactive } from "./js/petite-vue-module.js"
-    const userservice = new UserService();
+    import userservice from './js/userservice-module.js';
 
     // reconnect to server eventsource on browser wakeup after timeout
     let worker1 = new Worker("./js/wakeup.js");
     worker1.onmessage = function (ev) {
-      if (ev && ev.data === 'wakeup') {
-         console.log('WAKEUP !!!!!!!!!!!');
-         initEventSource();
-      }
+        if (ev && ev.data === 'wakeup') {
+            console.log('WAKEUP !!!!!!!!!!!');
+            initEventSource();
+        }
     }
 
     function initEventSource() {
@@ -62,17 +78,17 @@
     }
 
     const store = reactive({
-        users: {{users|json_encode()|raw}},
-        delete(id) {
-            const idx = this.users.findIndex(x => x.id == id);
-            this.users.splice(idx, 1);
-            userservice.deleteUser(id);
-            const notyf = new Notyf();
-            notyf.success('Delete User Success');
-        },
-        edit(id) {
-            window.location.href = '/useredit/' + id;
-        }
+        users: {{ users| json_encode() | raw}},
+    delete (id) {
+        const idx = this.users.findIndex(x => x.id == id);
+        this.users.splice(idx, 1);
+        userservice.deleteUser(id);
+        const notyf = new Notyf();
+        notyf.success('Delete User Success');
+    },
+    edit(id) {
+        window.location.href = '/useredit/' + id;
+    }
     });
 
     createApp({

@@ -4,13 +4,12 @@
 
 {% block script %}
 
-<script src="js/userservice.js"></script>
 <script type="module">
     const notyf = new Notyf();
-    const userservice = new UserService();
     import { createApp } from "./js/petite-vue-module.js";
     import store from "./js/store-module.js";
     import eventBus from "./js/mediator-module.js";
+    import userservice from "./js/userservice-module.js";
 
     function LoginForm() {
         return {
@@ -18,22 +17,21 @@
                 username: "admin",
                 password: "nimda",
             },
-            login() {
+            async login() {
                 if (this.user.username.trim().length == 0 || this.user.password.trim().length == 0) {
                     alert("Please enter Username and Password");
                     return;
                 }
-                // const result = userservice.userLogin(this.user);
-                // if (result.status !== 'ok') {
-                //     notyf.error("Login Failed");
-                //     return;
-                // }
+                const result = await userservice.userLogin({ ...this.user });
+                if (result.length == 0) {
+                    notyf.error("Login Failed");
+                    return;
+                }
                 store.setState({ username: this.user.username, isLoggedIn: true });
                 eventBus.emit('appstate', {});
                 notyf.success("Login Success");
             },
             mounted() {
-                console.log('111:mounted...');
                 store.getState();
             }
         }

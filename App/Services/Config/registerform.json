@@ -24,15 +24,6 @@
             'placeholder': 'phone',
             'vmodel': 'user.phone',
             'extra': 'required'
-        },
-        {
-            'name': 'surname',
-            'type': 'text',
-            'label': 'Surname',
-            'placeholder': 'surname',
-            'vmodel': 'user.surname',
-            'extra': 'required'
         }
-
     ]
 }

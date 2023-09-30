@@ -9,16 +9,12 @@
     <form v-scope="RegisterForm()" autocomplete="off" onsubmit="javascript:return false;">
         <label>User Name</label>
         <input is="my-input" class="form-input" type="text" name="field1" placeholder="user name" v-model="user.username" required />
-        <label>First Name</label>
-        <input is="my-input" class="form-input" type="text" name="field2" placeholder="first name" v-model="user.firstname" required />
-        <label>Last Name</label>
-        <input is="my-input" class="form-input" type="text" name="field3" placeholder="last name" v-model="user.lastname" required />
         <label>Email</label>
-        <input is="my-input" class="form-input" type="email" name="field4" placeholder="email" v-model="user.email" required />
+        <input is="my-input" class="form-input" type="email" name="field2" placeholder="email" v-model="user.email" required />
         <label>Phone</label>
-        <input is="my-input" class="form-input" type="text" name="field6" placeholder="phone" v-model="user.phone" required />
+        <input is="my-input" class="form-input" type="text" name="field3" placeholder="phone" v-model="user.phone" required />
         <label>User Type</label>
-        <select class="form-select" name="field7" v-model="user.type">
+        <select class="form-select" name="field4" v-model="user.type">
             <option value="ADMIN">admin</option>
             <option value="USER">user</option>
             <option value="CUSTOMER">customer</option>
@@ -41,12 +37,10 @@
         return {
             user: {
                 username: "",
-                firstname: "",
-                lastname: "",
                 email: "",
                 password: "",
                 phone: "",
-                type: "CUSTOMER",
+                type: "USER",
             },
             save() {
                 if (this.user.username.trim().length == 0 || this.user.email.trim().length == 0) {
